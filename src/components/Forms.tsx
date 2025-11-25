@@ -1,9 +1,13 @@
 import { categories } from "../data/Categorys"
+import type { ActivityActions } from "../Reducers/Activity-Reducers"
 import type { Activity } from "../Types/Index"
-import { useState } from "react"
+import { useState, type Dispatch } from "react"
 
+type FormProps = {
+    dispatch: Dispatch<ActivityActions>
+}
 
-export default function Forms() {
+export default function Forms({dispatch} : FormProps) {
 
   const [Activity, setActivity] = useState<Activity>({
     Category: 1,
@@ -14,7 +18,7 @@ export default function Forms() {
 
   const HandleChange = (e : React.ChangeEvent<HTMLSelectElement> |  React.ChangeEvent<HTMLInputElement>) => {
 
-    const IsNumberField = ['Category','Calories'].includes(e.target.id)
+  const IsNumberField = ['Category','Calories'].includes(e.target.id)
     
   
     setActivity({
@@ -29,11 +33,23 @@ export default function Forms() {
     return Name.trim() !== '' && Calories > 0
   }
 
+  const HandleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    console.log("Mandaste la informacion")
+    dispatch({type: 'Save-Activity', payload: {NewActivity : Activity}})
+  }
+
+
+
 
 
   return (
     <form
-    className= "space-y-7 bg-white p-10 shadow rounded-lg">
+    className= "space-y-7 bg-white p-10 shadow rounded-lg"
+    onSubmit={HandleSubmit}
+    >
+
       <div className="grid grid-cols-1 gap-3">
         <label htmlFor="Category">Categoria: </label>
 

@@ -1,8 +1,10 @@
-import type { Category } from "./Types/Index"
 import Forms from "./components/Forms"
-
+import { ActivityReducer, InitialState } from "./Reducers/Activity-Reducers"
+import { useReducer } from "react"
 
 function App() {
+
+  const [state, dispatch] = useReducer(ActivityReducer, InitialState)
 
   return (
     <>
@@ -20,7 +22,9 @@ function App() {
      <section className="bg-lime-900 py-20 px-5">
 
       <div className="max-w-4xl mx-auto">
-      <Forms />
+      <Forms 
+      dispatch = {dispatch}
+      />
 
       </div>
 
